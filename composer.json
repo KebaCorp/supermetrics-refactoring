@@ -1,0 +1,28 @@
+{
+  "type": "project",
+  "minimum-stability": "stable",
+  "prefer-stable": true,
+  "require": {
+    "php": "^8.1",
+    "ext-pdo": "*",
+    "ext-http": "*"
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "preferred-install": {
+      "*": "dist"
+    },
+    "sort-packages": true
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/",
+      "Lib\\": "lib/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "App\\": "src/"
+    }
+  }
+}

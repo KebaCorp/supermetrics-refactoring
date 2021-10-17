@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  app:
+    build: ./docker/app
+    restart: on-failure
+    volumes:
+      - .:/var/www/app/
+    working_dir: /var/www/app/
+    networks:
+      platform:
+        aliases:
+          - app.$PROJECT_NAME
+    external_links:
+      - web.erp.$PROJECT_NAME:web
+    links:
+      - postgres
+    depends_on:
+      - postgres
+
+  web:
+    build: ./docker/nginx
+    restart: on-failure
+    ports:
+      - $WEB_PORT:80
+      - 443:443
+    networks:
+      platform:
+        aliases:
+          - web.$PROJECT_NAME
+    volumes:
+      - ./docker/nginx/logs:/var/log/nginx/
+      - .:/var/www/app/
+    links:
+      - app
+    depends_on:
+      - app
+    environment:
+      - PROJECT_NAME=$PROJECT_NAME
+
+  postgres:
+    build: ./docker/databases/postgres
+    restart: on-failure
+    ports:
+      - $POSTGRES_PORT:5432
+    networks:
+      platform:
+        aliases:
+          - $POSTGRES_HOST
+    environment:
+      POSTGRES_USER: $POSTGRES_USERNAME
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+      POSTGRES_DB: $POSTGRES_DBNAME
+
+networks:
+  platform:
+    external:
+      name: supermetrics.$PROJECT_NAME
