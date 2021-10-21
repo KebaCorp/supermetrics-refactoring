@@ -24,7 +24,7 @@ final class MyRepository
      */
     public function findOneBy($field, $value): ?object
     {
-        $query = "SELECT * FROM {$this->tableName} WHERE {$field} = :val";
+        $query = "SELECT * FROM {$this->tableName} WHERE {$field} = :val LIMIT 1";
 
         $prepared = $this->pdo->prepare($query);
 
