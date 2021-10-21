@@ -10,7 +10,11 @@ use RuntimeException;
 
 final class MyRepository
 {
-    public function __construct(private PDO $pdo, private string $tableName, private string $className)
+    public function __construct(
+        private PDO $pdo,
+        private string $tableName,
+        private string $className,
+    )
     {
     }
 
@@ -36,7 +40,7 @@ final class MyRepository
             return null;
         }
 
-        $object = $prepared->fetchObject($this->className, []);
+        $object = $prepared->fetchObject($this->className);
 
         if (!$object) {
             return null;

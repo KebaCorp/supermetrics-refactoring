@@ -8,7 +8,7 @@ EXECUTE_APP ?= $(DOCKER_COMPOSE) exec app
 RUN_PHP ?= $(DOCKER_COMPOSE) run --rm --no-deps app
 RUN_COMPOSER = $(RUN_PHP) composer
 
-all: create-network install ps
+all: create-network install ps --print-link
 .PHONY: all
 
 create-network:
@@ -42,3 +42,8 @@ ps:
 ssh:
 	@$(EXECUTE_APP) /bin/sh
 .PHONY: ssh
+
+--print-link:
+	@echo "\nIs everything ready!\n"\
+	"It remains to click on the link to open the application:\n"\
+	http://localhost:8081/users?email=test1@gmail.com

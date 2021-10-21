@@ -6,12 +6,8 @@ namespace App\Domain\User;
 
 final class User
 {
-    public function __construct(
-        private int $id,
-        private string $email,
-    )
-    {
-    }
+    private int $id;
+    private string $email;
 
     public function id(): int
     {

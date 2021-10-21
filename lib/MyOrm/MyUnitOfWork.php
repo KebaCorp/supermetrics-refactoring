@@ -42,7 +42,7 @@ final class MyUnitOfWork
         return self::$instance;
     }
 
-    public function repository($tableName, $className): MyRepository
+    public function repository(string $tableName, string $className): MyRepository
     {
         return new MyRepository($this->pdo, $tableName, $className);
     }
