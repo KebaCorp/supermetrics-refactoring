@@ -11,6 +11,7 @@ use Exception;
 use Lib\MyAmazingFramework\MyController;
 use Lib\MyAmazingFramework\Request\MyRequest;
 use Lib\MyAmazingFramework\Response\MyJsonResponse;
+use Throwable;
 
 final class UserController extends MyController
 {
@@ -33,6 +34,11 @@ final class UserController extends MyController
             $result = $this->service->execute(new GetUserDto($email));
         } catch (UserNotFound $e) {
             throw new Exception($e->getMessage(), MyJsonResponse::HTTP_NOT_FOUND);
+        } catch (Throwable $e) {
+            throw new Exception(
+                'An unexpected error has occurred.',
+                MyJsonResponse::HTTP_INTERNAL_SERVER_ERROR
+            );
         }
 
         return new MyJsonResponse($result, MyJsonResponse::HTTP_OK);
